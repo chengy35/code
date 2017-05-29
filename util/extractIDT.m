@@ -14,7 +14,8 @@ function extractIDT(video_dir, videoname,descriptor_dir)
         descriptorFile = fullfile(descriptor_dir,sprintf('%s.mat',videoname{i}));
         if exist(descriptorFile,'file')
         else
-           extract_improvedfeatures(sprintf('%s/%s.avi',video_dir, videoname{i}),descriptorFile) ;
+            [obj,trj,hog,hof,mbhx,mbhy] = extract_improvedfeatures(sprintf('%s/%s.avi',video_dir, videoname{i}),descriptorFile) ;
+            save(descriptorFile,'obj','hog','hof','mbhx','mbhy');
         end
         sDescription = dir(descriptorFile);
         sizef = sDescription.bytes / (1024 * 1024);
