@@ -18,7 +18,6 @@ function HMDB51_IDTFV()
 %   action recognition: Comprehensive study and good practice. CoRR abs/1405.4506.(2014)
 
 addpath('util')
-% add dependency from vl_feat toolbox and libsvm
 addpath(genpath('mex'))
 addpath('~/lib/vlfeat/toolbox');
 vl_setup();
@@ -33,7 +32,8 @@ for s = 1:3
         % TODO: change some paths in run_split function
         split_accs = run_hmdb_split('split',s, 'dataset', 'hmdb51');
         des_accs = [des_accs, split_accs];
-    end
-    des_accs = [des_accs, mean(des_accs,2)]  
+end
+
+des_accs = [des_accs, mean(des_accs,2)]  
 end
 
