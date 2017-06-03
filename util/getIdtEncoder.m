@@ -30,8 +30,8 @@ function [gmm,codebook] = getIdtEncoder(split, videoname,vocab_dir,descriptor_di
         st = 1;
         for i = 1 : num_videos
             timest = tic();
-            descriptorFile = fullfile(descriptor_dir,sprintf('%s.bin',videoname{i}));
-            dt = readIDTbin(descriptorFile);
+            descriptorFile = fullfile(descriptor_dir,sprintf('%s.mat',videoname{i}));
+            dt = load(descriptorFile);
             if ~isempty(dt)
                 rnsam = randperm(size(dt.hog,1));
                 if numel(rnsam) > num_samples_per_vid
