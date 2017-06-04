@@ -19,8 +19,8 @@ function feat_all = encodeVideos(videoname,gmm,codebook,fv_dir,descriptor_dir, e
         timest = tic();
         savefile = fullfile(fv_dir, sprintf('%s.mat',videoname{i}));
         if ~exist(savefile, 'file')
-            descriptorFile = fullfile(descriptor_dir,sprintf('%s.bin',videoname{i}));
-            dt = readIDTbin(descriptorFile);
+            descriptorFile = fullfile(descriptor_dir,sprintf('%s.mat',videoname{i}));
+            dt = load(descriptorFile);
             if ~isempty(dt)
                 fv_hog(i,:) = vl_fisher( (bsxfun(@minus,dt.hog,gmm.centre.hog)*gmm.pcamap.hog)', gmm.means.hog, gmm.covariances.hog, gmm.priors.hog);
                 fv_hof(i,:) = vl_fisher( (bsxfun(@minus,dt.hof,gmm.centre.hof)*gmm.pcamap.hof)', gmm.means.hof, gmm.covariances.hof, gmm.priors.hof);
