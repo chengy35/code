@@ -7,7 +7,7 @@ function [videoname, classlabel,fv_dir, vocab_dir, descriptor_path, video_dir,ac
             descriptor_path = '/mnt/remote/hmdb51Data/descriptor';
             video_dir = '/mnt/remote/hmdb51';
             splitdir = '/mnt/remote/hmdb51Data/testTrainMulti_7030_splits';
-            [videoname, classlabel, tr_index, /mnt, /mnt, actions]= getHmdbSplit(split,splitdir);
+            [videoname, classlabel, tr_index, ~, ~, actions]= getHmdbSplit(split,splitdir);
         case 'jhmdb'
             fv_dir = ['/home/lear/xpeng/data/JHMDB/features/idt_fvecs_split', num2str(split)]; % Path where features will be saved
             vocab_dir = '/mnttemp';
