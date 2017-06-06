@@ -29,7 +29,7 @@ function des_accs = run_hmdb_split(varargin)
     testLabels = classlabel(test_indx);
     for i = 1 : numel(descriptorType)
         [~,ides] = ismember(descriptorType{i},{'hog','hof','mbhx','mbhy'});
-        if ~exist(sprintf('%s_%s_%d_Kern.mat',descriptorType{i},encode_method,split),'file')
+        if ~exist(sprintf('%s_%s_%s_%d_Kern.mat',descriptorType{i},encode_method,normalize,split),'file')
             feature = feat_all{ides};
             feature = normalize(feature',normalize_method, 2*gmmSize); % now feature in column-wise'
             TrainData = feature(:,trn_indx);
@@ -37,9 +37,9 @@ function des_accs = run_hmdb_split(varargin)
             TrainData_Kern = TrainData' * TrainData;
             TestData_Kern = TrainData' * TestData;
             clear TrainData; clear TestData;
-            save(sprintf('%s_%s_%d_Kern.mat',descriptorType{i},encode_method,split), 'TrainData_Kern', 'TestData_Kern','-v7.3');
+            save(sprintf('%s_%s_%s_%d_Kern.mat',descriptorType{i},encode_method,normalize,split), 'TrainData_Kern', 'TestData_Kern','-v7.3');
         else
-            load(sprintf('%s_%s_%d_Kern.mat',descriptorType{i},encode_method,split));
+            load(sprintf('%s_%s_%s_%d_Kern.mat',descriptorType{i},encode_method,normalize,split));
         end
         if i==1
             tr_kern_sum = TrainData_Kern;
@@ -54,7 +54,7 @@ function des_accs = run_hmdb_split(varargin)
         des_accs(i) = avg_acc;
         fprintf('split---%d, %s--->accuracy:\n %f\n',split, descriptorType{i}, avg_acc);
     end
-    save(sprintf('%d_%s_%s_SumKern.mat',split,encode_method,cell2mat(descriptorType)), 'tr_kern_sum', 'ts_kern_sum','-v7.3');
+    save(sprintf('%d_%s_%s_%s_SumKern.mat',split,encode_method,normalize,cell2mat(descriptorType)), 'tr_kern_sum', 'ts_kern_sum','-v7.3');
     score_test = svm_one_vs_all(tr_kern_sum, ts_kern_sum, trainLabels', max(classlabel));
     [~, predict_labels] = max(score_test');
     [~,avg_acc,~] = get_cm(testLabels',predict_labels',1);
