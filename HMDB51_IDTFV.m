@@ -30,7 +30,7 @@ addpath('~/lib/natsort');
 des_accs = [];
 for s = 1:3
         % TODO: change some paths in run_split function
-        split_accs = run_hmdb_split('split',s, 'dataset', 'hmdb51');
+        split_accs = run_hmdb_split('split',s, 'dataset', 'hmdb51','normalize','Power-Intra-L2');
         des_accs = [des_accs, split_accs];
 end
 
